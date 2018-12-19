@@ -7,30 +7,28 @@ class Solution:
         :type strs: List[str]
         :rtype: str
         """
+        if len(strs)==0:
+            return ""
+        len_shortest_str = len(strs[0])
+        count = 0
         lcp = ""
-        index = 0
-        len_shortest_str = 0
-
+        exit_now = False
         for stng in strs:
             if len(stng) < len_shortest_str:
                 len_shortest_str = len(stng)
-        work = True
-        i=0
-        while work and i<len_shortest_str:
-            temp = strs[0][i]
-            for stng in range(0, len(strs)):
-
-                if strs[stng][i] == temp:
-                    if stng==len(strs)-1:
-                        lcp = lcp + strs[stng][i]
+        for i in range(0, len_shortest_str):
+            char_check = strs[0][i]
+            for stng in strs:
+                if stng[i] == char_check:
+                    continue
                 else:
-                    work = False
+                    exit_now = True
                     break
-            i=i+1
+            if not exit_now:
+                lcp = lcp + char_check
         return lcp
-
 
 if __name__ == "__main__":
     sol = Solution()
-    ip = []
+    ip = ["dog"]
     print(sol.longestCommonPrefix(ip))
