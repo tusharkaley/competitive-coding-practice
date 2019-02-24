@@ -1,3 +1,5 @@
+# 2D Array
+# Check neighbours in a 2 D array
 def check_neighbours(r, c, mat):
 	left = -10
 	right = -10
@@ -28,7 +30,13 @@ def check_neighbours(r, c, mat):
 		print("top: {}".format(top))
 	if bottom:
 		print("bottom: {}".format(bottom))
-
+# BST
+# Height of a binary search tree
+def height(root):
+    if root == None:
+        return -1
+    else:
+        return 1+max(height(root.left), height(root.right)) 
 
 if __name__ == '__main__':
 	matches = [[0]*4 for _ in range(4)]
