@@ -38,7 +38,7 @@ def check_neighbours(r, c, mat):
 		print("top: {}".format(top))
 	if bottom:
 		print("bottom: {}".format(bottom))
-# **********BST END**********
+# **********TREE START**********
 # Height of a binary search tree
 def height(root):
 	if root == None:
@@ -62,6 +62,7 @@ def height(root):
 # 		count = count + 1
 # 	return bst_list
 
+# Code to get level by level list of nodes of a binary tree 
 def traverse_tree_stack(root):
 	count = 0
 	i = 0
@@ -89,6 +90,41 @@ def traverse_tree_stack(root):
 
 	op_list = op_list[::-1]
 	return op_list
+
+# Code to get level by level list of nodes of a tree with a definition that looks like this ->
+# Definition for a Node.
+# class Node:
+#     def __init__(self, val, children):
+#         self.val = val
+#         self.children = children
+
+def levelOrder(self, root: 'Node') -> List[List[int]]:
+        count = 0
+        i = 0
+        stack = [(root, 0)]
+
+        op_list = list()
+        temp_list = list()
+        prev_lev = 0
+        while stack:
+            node, level = stack.pop(0)
+            # print(stack)
+            if node: 
+                for nd in node.children:
+                   stack.append((nd, level+1))
+                
+                # print(level)
+                if prev_lev != level:
+                    prev_lev = level
+                    op_list.append(temp_list)
+                    temp_list= list()
+                    temp_list.append(node.val)
+                else:
+                    temp_list.append(node.val)
+        if temp_list:
+            op_list.append(temp_list)
+
+        return op_list
 # Check if p and q are exactly the same....values and node structure should match
 def isSameTree(self, p, q):
         if (p == None and q!=None) or (p != None and q==None):
@@ -115,8 +151,54 @@ def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
         node.right = self.sortedArrayToBST(nums[mid+1:])
         
         return node
+# Calculate sum of ALL left elements
+def rec_left_node_sum(self,root, left_sum)->int:
+        if not root:
+            return left_sum
+        if root.left == None and root.right == None:
+            return left_sum
+        
+        
+        if root.left:
+            left_sum = left_sum + root.left.val
+            left_sum = self.rec_sum(root.left, left_sum) 
+        if root.right:
+            left_sum = self.rec_sum(root.right, left_sum)
+        return  left_sum
 
-# **********BST END**********
+# Calculate sum of ALL left LEAFs
+def rec_left_leaf_sum(self,root, left_sum)->int:
+        if not root:
+            return left_sum
+        
+        if root.left == None and root.right == None:
+            return left_sum
+        
+        
+        if root.left:
+            if root.left.left == None and root.left.right == None:
+                left_sum = left_sum + root.left.val
+            left_sum = self.rec_sum(root.left, left_sum) 
+        if root.right:
+            
+            left_sum = self.rec_sum(root.right, left_sum)
+        return  left_sum
+
+# ALL ROOT TO LEAF PATHS
+def find_path(self, root: TreeNode, path) ->List[str]:
+        plist = list()
+        path = path + str(root.val)
+        
+        if root.left == None and root.right ==None:
+            return [path]
+        path = path + "->"
+        if root.left:
+            plist = plist + self.find_path(root.left, path)
+        if root.right:
+            plist = plist + self.find_path(root.right, path)
+        return plist
+
+# **********TREE END**********
 if __name__ == '__main__':
 
 	t = TreeNode(8)
