@@ -1,3 +1,5 @@
+# **********Arrays start**********
+
 # 2D Array
 # Check neighbours in a 2 D array
 # Definition for a binary tree node.
@@ -38,6 +40,20 @@ def check_neighbours(r, c, mat):
 		print("top: {}".format(top))
 	if bottom:
 		print("bottom: {}".format(bottom))
+
+# If we take XOR of zero and some bit, it will return that bit
+ # a⊕0=a
+# If we take XOR of two same bits, it will return 0
+# a⊕a=0
+# a⊕b⊕a=(a⊕a)⊕b=0⊕b=b
+# https://leetcode.com/problems/single-number/solution/
+def singleNumber(self, nums: List[int]) -> int:
+        a = 0
+        for i in nums:
+            a ^= i
+        return a
+# **********Arrays end**********
+
 # **********TREE START**********
 # Height of a binary search tree
 def height(root):
@@ -64,8 +80,6 @@ def height(root):
 
 # Code to get level by level list of nodes of a binary tree 
 def traverse_tree_stack(root):
-	count = 0
-	i = 0
 	stack = [(root, 0)]
 	
 	op_list = list()
@@ -125,6 +139,40 @@ def levelOrder(self, root: 'Node') -> List[List[int]]:
             op_list.append(temp_list)
 
         return op_list
+
+# Traverse the tree in zig zag order level by level
+def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+		count = 0
+		i = 0
+		stack = [(root, 0)]
+
+		op_list = list()
+		temp_list = list()
+		prev_lev = 0
+		while stack:
+			node, level = stack.pop(0)
+			# print(stack)
+			if node: 
+				stack.append((node.left, level+1))
+				stack.append((node.right, level+1))
+				# print(level)
+				if prev_lev != level:
+					prev_lev = level
+					if count % 2!=0:
+						temp_list.reverse();
+					op_list.append(temp_list)
+					temp_list= list()
+					temp_list.append(node.val)
+					count = count + 1
+				else:
+					temp_list.append(node.val)
+				
+		if temp_list:
+			if (count) % 2!=0:
+				temp_list.reverse();
+			op_list.append(temp_list)
+
+		return(op_list)
 # Check if p and q are exactly the same....values and node structure should match
 def isSameTree(self, p, q):
         if (p == None and q!=None) or (p != None and q==None):
@@ -197,8 +245,140 @@ def find_path(self, root: TreeNode, path) ->List[str]:
         if root.right:
             plist = plist + self.find_path(root.right, path)
         return plist
+def get_all_nodes(self, root):
+		count = 0
+		i = 0
+		stack = [(root, 0)]
+		
+		op_list = list()
+		temp_list = list()
+		prev_lev = 0
+		while stack:
+			node, level = stack.pop(0)
+			# print(stack)
+			if node: 
+				stack.append((node.left, level+1))
+				stack.append((node.right, level+1))
+				# print(level)
+				if prev_lev != level:
+					prev_lev = level
+					op_list.extend(temp_list)
+					temp_list= list()
+					temp_list.append(node)
+				else:
+					temp_list.append(node)
+		if temp_list:
+			op_list.extend(temp_list)
 
+		return op_list
+def hasPathSum(self, root: TreeNode, sum: int, count: int, current_sum: int) -> int:
+	
+	if root == None:
+		return count
+	current_sum = current_sum + root.val
+	
+	if current_sum == sum:
+		count = count + 1
+
+	count =  self.hasPathSum(root.left, sum, count, current_sum)
+	count =  self.hasPathSum(root.right, sum, count, current_sum)
+	return count
+# Given two trees return a merged tree
+def mergeTrees(self, t1: TreeNode, t2: TreeNode) -> TreeNode:
+        if t1 == None:
+            return t2
+        if t2 == None:
+            return t1
+        t1.val = t1.val + t2.val
+        t1.left = self.mergeTrees(t1.left, t2.left)
+        t1.right = self.mergeTrees(t1.right, t2.right)
+        return t1
+# Inorder traversal
+def inorder(self,root, temp):
+        if root == None:
+            return temp
+        self.inorder(root.left, temp)
+        temp.append(root.val)
+        self.inorder(root.right, temp)
 # **********TREE END**********
+# **********Linked List start**********
+# Given a linked list representing a number in reverse order convert it to that number
+# (2 -> 4 -> 3) => 342
+def convert_list_to_num(self, l):
+        """
+        :type l: ListNode
+        :rtype: integer
+        """
+        num_str = ""
+        
+        while True:
+            if not l:
+                break
+            else:
+                num_str = num_str + str(l.val)
+                l = l.next
+        num_str = num_str[::-1]
+        return int(num_str)
+
+# Given a number convert it to a linked list representing that number in reverse order
+# 342 => (2 -> 4 -> 3)
+def convert_num_to_list(self, num):
+    """
+    :type num: integer
+    :rtype: ListNode
+    """
+    num_str = str(num)[::-1]
+    l= ListNode(0)
+    first = True
+    l1 = ListNode(0)
+    num_str_len = len(num_str)
+    count = 0
+    for ch in num_str:
+        count = count + 1
+        if first:
+            l.val = int(ch)
+            if count < num_str_len:
+               l.next = l1
+            first = False
+        else:
+            
+            l2 = ListNode(0)
+            l1.val = int(ch)
+            if count < num_str_len:
+                l1.next = l2
+                l1 = l2
+                
+    return l 
+# https://leetcode.com/problems/add-two-numbers/submissions/
+# Given a two numbers represented as a reversed linked list return their sum
+def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        temp = ListNode(0)
+        p = l1
+        q = l2
+        curr = temp
+        prev = ListNode(0)
+        carry = 0
+        while p!= None or q!= None:
+            x = p.val if p!= None else 0
+            y = q.val if q!= None else 0
+            sum = x + y + carry
+            carry = int(sum / 10)
+            curr.val = sum % 10
+            
+            curr.next = ListNode(0)
+            prev = curr
+            curr = curr.next
+            if p!= None:
+                p = p.next
+            if q!= None:
+                q = q.next
+        if carry> 0:
+            curr.val = carry
+        else:
+            prev.next = None
+        return temp
+# **********Linked List end**********
+
 if __name__ == '__main__':
 
 	t = TreeNode(8)
