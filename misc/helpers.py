@@ -42,10 +42,10 @@ def check_neighbours(r, c, mat):
 		print("bottom: {}".format(bottom))
 
 # If we take XOR of zero and some bit, it will return that bit
- # a⊕0=a
+ # a xor 0=a
 # If we take XOR of two same bits, it will return 0
-# a⊕a=0
-# a⊕b⊕a=(a⊕a)⊕b=0⊕b=b
+# a xor a=0
+# a xor b xor a=(a xor a) xor b=0 xor b=b
 # https://leetcode.com/problems/single-number/solution/
 def singleNumber(self, nums: List[int]) -> int:
         a = 0
@@ -245,6 +245,7 @@ def find_path(self, root: TreeNode, path) ->List[str]:
         if root.right:
             plist = plist + self.find_path(root.right, path)
         return plist
+
 def get_all_nodes(self, root):
 		count = 0
 		i = 0
@@ -271,6 +272,7 @@ def get_all_nodes(self, root):
 			op_list.extend(temp_list)
 
 		return op_list
+
 def hasPathSum(self, root: TreeNode, sum: int, count: int, current_sum: int) -> int:
 	
 	if root == None:
@@ -293,6 +295,7 @@ def mergeTrees(self, t1: TreeNode, t2: TreeNode) -> TreeNode:
         t1.left = self.mergeTrees(t1.left, t2.left)
         t1.right = self.mergeTrees(t1.right, t2.right)
         return t1
+
 # Inorder traversal
 def inorder(self,root, temp):
         if root == None:
