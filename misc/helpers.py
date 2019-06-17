@@ -10,6 +10,11 @@ class TreeNode:
 		self.left = None
 		self.right = None
 
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
 def check_neighbours(r, c, mat):
 	left = -10
 	right = -10
@@ -47,7 +52,7 @@ def check_neighbours(r, c, mat):
 # a xor a=0
 # a xor b xor a=(a xor a) xor b=0 xor b=b
 # https://leetcode.com/problems/single-number/solution/
-def singleNumber(self, nums: List[int]) -> int:
+def singleNumber(self, nums):
         a = 0
         for i in nums:
             a ^= i
@@ -112,7 +117,7 @@ def traverse_tree_stack(root):
 #         self.val = val
 #         self.children = children
 
-def levelOrder(self, root: 'Node') -> List[List[int]]:
+def levelOrder(self, root):
         count = 0
         i = 0
         stack = [(root, 0)]
@@ -141,7 +146,7 @@ def levelOrder(self, root: 'Node') -> List[List[int]]:
         return op_list
 
 # Traverse the tree in zig zag order level by level
-def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+def zigzagLevelOrder(self, root):
 		count = 0
 		i = 0
 		stack = [(root, 0)]
@@ -185,7 +190,7 @@ def isSameTree(self, p, q):
             return (self.isSameTree(p.left, q.right) and self.isSameTree(p.right, q.left))
 
 
-def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+def sortedArrayToBST(self, nums):
         mid = 0
         num_len = len(nums)
         if num_len == 0:
@@ -200,7 +205,7 @@ def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
         
         return node
 # Calculate sum of ALL left elements
-def rec_left_node_sum(self,root, left_sum)->int:
+def rec_left_node_sum(self,root, left_sum):
         if not root:
             return left_sum
         if root.left == None and root.right == None:
@@ -215,7 +220,7 @@ def rec_left_node_sum(self,root, left_sum)->int:
         return  left_sum
 
 # Calculate sum of ALL left LEAFs
-def rec_left_leaf_sum(self,root, left_sum)->int:
+def rec_left_leaf_sum(self,root, left_sum):
         if not root:
             return left_sum
         
@@ -233,7 +238,7 @@ def rec_left_leaf_sum(self,root, left_sum)->int:
         return  left_sum
 
 # ALL ROOT TO LEAF PATHS
-def find_path(self, root: TreeNode, path) ->List[str]:
+def find_path(self, root, path):
         plist = list()
         path = path + str(root.val)
         
@@ -273,7 +278,7 @@ def get_all_nodes(self, root):
 
 		return op_list
 
-def hasPathSum(self, root: TreeNode, sum: int, count: int, current_sum: int) -> int:
+def hasPathSum(self, root, sum, count, current_sum):
 	
 	if root == None:
 		return count
@@ -286,7 +291,7 @@ def hasPathSum(self, root: TreeNode, sum: int, count: int, current_sum: int) -> 
 	count =  self.hasPathSum(root.right, sum, count, current_sum)
 	return count
 # Given two trees return a merged tree
-def mergeTrees(self, t1: TreeNode, t2: TreeNode) -> TreeNode:
+def mergeTrees(self, t1, t2):
         if t1 == None:
             return t2
         if t2 == None:
@@ -354,7 +359,7 @@ def convert_num_to_list(self, num):
     return l 
 # https://leetcode.com/problems/add-two-numbers/submissions/
 # Given a two numbers represented as a reversed linked list return their sum
-def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+def addTwoNumbers(self, l1, l2):
         temp = ListNode(0)
         p = l1
         q = l2
@@ -382,20 +387,55 @@ def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         return temp
 # **********Linked List end**********
 
+def binary_search(nums, start, end, value):
+    if start<=end:
+        mid = int((start + end)/2)
+        if nums[mid]==value:
+            return mid
+        if value > nums[mid]:
+            return binary_search(nums, mid+1, end, value)
+        else:
+            return binary_search(nums, start, mid-1, value)
+    else:
+        return -1
+
+def search_correct_index(nums, start, end, value):
+    print("{}:{}".format(start, end))
+    if end - start>2:
+        mid = int((start + end)/2)
+        if nums[mid]==value:
+            return mid
+        if value > nums[mid]:
+            return search_correct_index(nums, mid, end, value)
+        else:
+            return search_correct_index(nums, start, mid, value)
+    else:
+        # if end == start:
+        #     return start
+        for i in range(start, end+1):
+            if nums[i]>=value:
+                return i
+            if i == end:
+                return end+1
+
+
 if __name__ == '__main__':
 
-	t = TreeNode(8)
-	left = TreeNode(6)
-	right = TreeNode(5)
-	rleft = TreeNode(4)
-	lleft = TreeNode(3)
-	t.left = left
+	# t = TreeNode(8)
+	# left = TreeNode(6)
+	# right = TreeNode(5)
+	# rleft = TreeNode(4)
+	# lleft = TreeNode(3)
+	# t.left = left
 
-	t.right = right
-	t.left.left = lleft
-	t.right.left = rleft
-	print(height(t))
+	# t.right = right
+	# t.left.left = lleft
+	# t.right.left = rleft
+	# print(height(t))
 
-	print(traverse_tree_stack(None))
+	# print(traverse_tree_stack(None))
 	# check_neighbours(0,0, matches)
+    test = [-3]
+    print(search_correct_index(test, 0, len(test)-1, -2))
+
 
