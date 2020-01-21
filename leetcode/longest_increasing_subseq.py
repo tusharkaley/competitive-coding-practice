@@ -14,10 +14,13 @@ class Solution:
     				if temp_max>max_len:
     					max_len = temp_max
     					temp_max = 1
+    				else:
+    					temp_max = 1
     	if temp_max!=0:
     		if temp_max>max_len:
     					max_len = temp_max
     	return max_len
+
 if __name__ == '__main__':
 	s = Solution()
 	nums = [1,3,5,4,7]
